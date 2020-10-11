@@ -1,8 +1,6 @@
 package models.map;
 
-import java.io.Serializable;
-
-public class Map implements Serializable {
+public class Map {
     private int _id;
-    private int _dimensions;
+    private int _dimension;
 }

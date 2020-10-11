@@ -1,5 +1,6 @@
 package swingy;
 
+import database.Database;
 import models.character.villains.VillainClass;
 import models.character.villains.VillainNames;
 
@@ -12,7 +13,16 @@ import java.util.Set;
 import java.util.logging.Level;
 
 public class Swingy {
+
+    public static void initialiseDB() throws ClassNotFoundException {
+        Database.createMapTable();
+        Database.createHeroTable();
+        Database.createGameStateTable();
+    }
+
     public static void main(String[] args) throws Exception {
+
+        initialiseDB();
 
         //Don't log to the stdout
         //java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
