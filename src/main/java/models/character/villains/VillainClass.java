@@ -3,9 +3,9 @@ package models.character.villains;
 import java.util.Random;
 
 public enum VillainClass {
-    CharlesDavenport,
-    DonaldJTrump,
-    MongolWarrior;
+    NaughtyBoy,
+    PsychoticPatient,
+    Executioner;
 
     public static VillainClass getVillainRandomClass() {
         Random random = new Random();
