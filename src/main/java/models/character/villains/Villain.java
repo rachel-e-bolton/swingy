@@ -10,7 +10,7 @@ public class Villain extends AbstractCharacter {
     private VillainClass _class;
 
     public Villain(String name, VillainClass villainClass, Hero opponent) {
-        super(name, "VILLAIN");
+        super(name, "VILLAIN", -1);
         this._class = villainClass;
 
         Random random = new Random();

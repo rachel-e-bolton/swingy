@@ -33,26 +33,19 @@ public abstract class AbstractCharacter implements Serializable {
     @Size(min=3,max=25)
     protected String _name;
 
-    private static int _idCounter = -1;
-
-    protected AbstractCharacter(String name, String type) {
+    protected AbstractCharacter(String name, String type, int id) {
         this._name = name;
         if (type == "HERO") {
-            this._id = nextId();
+            this._id = id;
         }
-
     }
 
-    private int nextId() {
-        return (++_idCounter);
+    public int get_id() {
+        return _id;
     }
 
     public int get_level() {
         return _level;
-    }
-
-    public void set_level(int _level) {
-        this._level = _level;
     }
 
     public int get_xp() {

@@ -4,19 +4,10 @@ import models.map.Map;
 
 import java.io.Serializable;
 
-public class GameState implements Serializable {
-    private int _id;
+public class GameState {
     private int _mapId;
     private int _heroId;
     private String _heroName;
-
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
-    }
 
     public int get_mapId() {
         return _mapId;

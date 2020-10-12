@@ -1,5 +1,6 @@
 package models.character.heros;
 
+import controllers.database.Database;
 import models.character.AbstractCharacter;
 
 import java.io.Serializable;
@@ -8,8 +9,8 @@ public class Hero extends AbstractCharacter implements Serializable {
 
     private HeroClass _class;
 
-    public Hero(String name, HeroClass heroClass) {
-        super(name, "HERO");
+    public Hero(String name, HeroClass heroClass) throws ClassNotFoundException {
+        super(name, "HERO", (Database.GetMaxHeroId() + 1));
         this._class = heroClass;
 
         switch (heroClass) {
