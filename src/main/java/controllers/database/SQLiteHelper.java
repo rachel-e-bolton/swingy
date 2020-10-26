@@ -8,11 +8,34 @@ public class SQLiteHelper {
 
     private static Connection conn = null;
 
-    public static Connection getConn() throws ClassNotFoundException, SQLException {
-        if(conn == null){
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:swingy.db");
+    private static Connection CreateConnection() throws ClassNotFoundException {
+        Connection conn = null;
+        String uri = "jdbc:sqlite:swingy.db";
+        Class.forName("org.sqlite.JDBC");
+        try {
+            conn = DriverManager.getConnection(uri);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
         return conn;
+    }
+
+    public static Connection GetInstance() throws ClassNotFoundException {
+        if (conn == null) {
+            return CreateConnection();
+        }
+
+        return conn;
+    }
+
+    public static void CloseConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                System.out.println("Could not close database connection.");
+            }
+
+        }
     }
 }

@@ -4,12 +4,13 @@ import controllers.database.Database;
 import models.character.AbstractCharacter;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 
 public class Hero extends AbstractCharacter implements Serializable {
 
     private HeroClass _class;
 
-    public Hero(String name, HeroClass heroClass) throws ClassNotFoundException {
+    public Hero(String name, HeroClass heroClass) throws ClassNotFoundException, SQLException {
         super(name, "HERO", (Database.GetMaxHeroId() + 1));
         this._class = heroClass;
 
