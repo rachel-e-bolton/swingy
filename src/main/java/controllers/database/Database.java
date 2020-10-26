@@ -5,6 +5,7 @@ import models.gamestate.GameState;
 import models.map.Map;
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
@@ -260,7 +261,7 @@ public class Database {
 
     public static void CreateGameState(GameState gameState) throws SQLException, ClassNotFoundException {
 
-        String sql = "INSERT INTO game_state(mapId,heroId,heroName,heroLevel,heroXp) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO game_state(mapId,heroId,heroName,heroLevel,heroXP) VALUES (?,?,?,?,?)";
         Connection conn = SQLiteHelper.GetInstance();
 
         try {
@@ -281,16 +282,38 @@ public class Database {
         }
     }
 
-    /*public static List<GameState> GetSavedGames() {
+    public static ArrayList<GameState> GetSavedGames() throws ClassNotFoundException{
+        String sql = "SELECT * FROM game_state";
+        Connection conn = SQLiteHelper.GetInstance();
+        ArrayList<GameState> savedGames = new ArrayList<>();
 
-    }*/
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                GameState gameState = new GameState();
+                gameState.set_mapId(rs.getInt("mapId"));
+                gameState.set_heroId(rs.getInt("heroId"));
+                gameState.set_heroName(rs.getString("heroName"));
+                gameState.set_heroLevel(rs.getInt("heroLevel"));
+                gameState.set_heroXP(rs.getInt("heroXP"));
+                savedGames.add(gameState);
+            }
+        } catch (SQLException e) {
+            System.out.println("GetSavedGame: " + e.getMessage());
+        } finally {
+            SQLiteHelper.CloseConnection(conn);
+        }
+
+        return savedGames;
+    }
 
     public static void UpdateGameState(GameState gameState) throws ClassNotFoundException {
         String sql = "UPDATE game_state\n"
                 + "	SET mapId = ?,\n"
                 + "	heroName = ?,\n"
                 + " heroLevel = ?,\n"
-                + "	heroXP = ?,\n"
+                + "	heroXP = ?\n"
                 + " WHERE heroId = ?";
         Connection conn = SQLiteHelper.GetInstance();
 
