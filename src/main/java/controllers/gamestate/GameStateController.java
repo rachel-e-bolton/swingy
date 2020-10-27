@@ -2,10 +2,13 @@ package controllers.gamestate;
 
 import controllers.database.Database;
 import controllers.map.MapController;
+import helpers.GeneralHelpers;
+import models.character.heros.Hero;
 import models.gamestate.GameState;
 import models.map.Map;
 import views.console.gamestate.GameStateView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GameStateController {
@@ -19,12 +22,21 @@ public class GameStateController {
         this._savedGames = Database.GetSavedGames();
     }
 
-    public void showSavedGames() throws ClassNotFoundException {
+    public void ShowSavedGames() throws ClassNotFoundException {
+        GeneralHelpers.ClearScreen();
         if (_savedGames.size() > 0){
             _gameStateView.PrintSavedGames(_savedGames);
         } else {
-            System.out.println("No Saved Games Found.");
-            _gameStateView.PrintStartOptions();
+            System.out.println("No Saved Games Found.\nExiting...\n");
+            try
+            {
+                Thread.sleep(2200);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+            GeneralHelpers.ClearScreen();
         }
     }
 
@@ -38,11 +50,33 @@ public class GameStateController {
         _gameState.set_heroXP(loadGame.get_heroXP());
     }
 
-    public void CreateGame() throws ClassNotFoundException {
+    public void CreateGameState(Map map, Hero hero) throws ClassNotFoundException, SQLException {
+        _gameState.set_mapId(map.get_id());
+        _gameState.set_heroId(hero.get_id());
+        _gameState.set_heroName(hero.get_name());
+        _gameState.set_heroLevel(hero.get_level());
+        _gameState.set_heroXP(hero.get_xp());
 
+        Database.CreateGameState(_gameState);
     }
 
-    public void SaveGame() throws ClassNotFoundException {
+    public void UpdateGameState(Hero hero) throws ClassNotFoundException {
+        _gameState.set_heroLevel(hero.get_level());
+        _gameState.set_heroXP(hero.get_xp());
+
         Database.UpdateGameState(_gameState);
+    }
+
+    public void StartGame(){
+        GeneralHelpers.ClearScreen();
+        _gameStateView.PrintStartOptions();
+    }
+
+    public void RequestName(){
+        _gameStateView.PrintNameRequest();
+    }
+
+    public void RequestClass(){
+        _gameStateView.PrintHeroClasses();
     }
 }

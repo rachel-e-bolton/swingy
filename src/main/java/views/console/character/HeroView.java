@@ -2,6 +2,7 @@ package views.console.character;
 
 import helpers.TextColors;
 import models.character.heros.Hero;
+import models.character.heros.HeroClass;
 
 public class HeroView {
     public void PrintPosition(Hero hero){
@@ -16,5 +17,6 @@ public class HeroView {
         System.out.println("Attack: " + hero.get_attack());
         System.out.println("Defense: " + hero.get_defense());
         System.out.println("HP: " + "\n" + hero.get_hp());
+        System.out.println(TextColors.ANSI_GREEN + "[B]" + TextColors.ANSI_RESET + " - [B]ack");
     }
 }

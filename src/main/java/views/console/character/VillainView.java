@@ -13,4 +13,9 @@ public class VillainView {
         System.out.println("Defense: " + villain.get_defense());
         System.out.println("HP: " + "\n" + villain.get_hp());
     }
+
+    public void PrintFightOptions(){
+        System.out.println(TextColors.ANSI_BLUE + "[F]" + TextColors.ANSI_RESET + " - [F]ight");
+        System.out.println(TextColors.ANSI_BLUE + "[R]" + TextColors.ANSI_RESET + " - [R]un");
+    }
 }
