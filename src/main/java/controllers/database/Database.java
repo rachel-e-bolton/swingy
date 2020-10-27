@@ -6,7 +6,6 @@ import models.map.Map;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Database {
 
@@ -78,6 +77,31 @@ public class Database {
             SQLiteHelper.CloseConnection(conn);
         }
         return null;
+    }
+
+    public static void UpdateMap(Map map) throws ClassNotFoundException {
+
+        String sql = "UPDATE maps SET map_object = ? WHERE id = ?";
+        Connection conn = SQLiteHelper.GetInstance();
+
+        try {
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oout = new ObjectOutputStream(baos);
+            oout.writeObject(map);
+            oout.close();
+
+            pstmt.setBytes(1, baos.toByteArray());
+            pstmt.setInt(2, map.get_id());
+            pstmt.executeUpdate();
+
+        } catch (SQLException | IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            SQLiteHelper.CloseConnection(conn);
+        }
+
     }
 
     public static int GetMaxMapId() throws ClassNotFoundException {

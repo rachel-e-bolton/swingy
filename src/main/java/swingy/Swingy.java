@@ -2,6 +2,8 @@ package swingy;
 
 import controllers.database.Database;
 import helpers.TextColors;
+import models.gamestate.GameState;
+import views.console.gamestate.GameStateView;
 
 public class Swingy {
 
@@ -21,6 +23,11 @@ public class Swingy {
 
             if (args[0].equals("console")) {
                 InitialiseDB();
+
+                GameState gameState = new GameState();
+                GameStateView gameStateView = new GameStateView();
+
+
             } else {
                 System.out.println(TextColors.ANSI_BLUE + "GUI mode is still under construction. Check back soon." + TextColors.ANSI_RESET);
             }

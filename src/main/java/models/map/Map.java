@@ -13,9 +13,12 @@ public class Map implements Serializable {
     private int _dimension;
 
 
-    public Map(Hero hero, int startId) {
+    public Map(int startId) {
         this._id = startId;
-        this._dimension = (hero.get_level() - 1) * 5 + 10 - (hero.get_level() % 2);
+    }
+
+    public void set_dimension(int _dimension) {
+        this._dimension = _dimension;
     }
 
     public int get_id() {
