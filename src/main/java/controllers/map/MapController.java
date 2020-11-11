@@ -32,15 +32,15 @@ public class MapController {
         Database.UpdateMap(_map);
     }
 
-    public void LoadSavedMap(int id) throws ClassNotFoundException {
-        this._map = Database.GetMap(id);
-    }
-
     public void ShowMap() {
         _mapView.PrintMapDetails(_map);
     }
 
     public Map GetMap() {
         return this._map;
+    }
+
+    public int GetDimensions() {
+        return this._map.get_dimension();
     }
 }

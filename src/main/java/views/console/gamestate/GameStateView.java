@@ -40,9 +40,7 @@ public class GameStateView {
         System.out.println(TextColors.ANSI_BLUE + "[S]" + TextColors.ANSI_RESET + " - DOWN");
         System.out.println(TextColors.ANSI_BLUE + "[A]" + TextColors.ANSI_RESET + " - LEFT");
         System.out.println(TextColors.ANSI_BLUE + "[D]" + TextColors.ANSI_RESET + " - RIGHT");
-        System.out.println(TextColors.ANSI_PURPLE + "[P]" + TextColors.ANSI_RESET + " - [P]layer stats");
-        System.out.println(TextColors.ANSI_GREEN + "[S]" + TextColors.ANSI_RESET + " - [S]ave");
-        System.out.println(TextColors.ANSI_RED + "[Q]" + TextColors.ANSI_RESET + " - [Q]uit");
+        System.out.println(TextColors.ANSI_PURPLE + "[P]" + TextColors.ANSI_RESET + " - [P]layer stats | " + TextColors.ANSI_GREEN + "[X]" + TextColors.ANSI_RESET + " - Save | " + TextColors.ANSI_RED + "[Q]" + TextColors.ANSI_RESET + " - [Q]uit\n");
     }
 
     public void PrintHeroClasses(){

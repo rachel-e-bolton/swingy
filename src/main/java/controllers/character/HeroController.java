@@ -1,6 +1,7 @@
 package controllers.character;
 
 import controllers.database.Database;
+import helpers.Directions;
 import models.character.heros.Hero;
 import org.omg.DynamicAny.DynArray;
 import views.console.character.HeroView;
@@ -34,5 +35,30 @@ public class HeroController {
 
     public Hero GetHero() {
         return this._hero;
+    }
+
+    public void Move(Directions direction){
+        switch (direction) {
+            case Up:
+                this._hero.set_colPosition((this._hero.get_colPosition()-1));
+                break;
+            case Down:
+                this._hero.set_colPosition((this._hero.get_colPosition()+1));
+                break;
+            case Left:
+                this._hero.set_rowPosition((this._hero.get_rowPosition()-1));
+                break;
+            case Right:
+                this._hero.set_rowPosition((this._hero.get_rowPosition()+1));
+                break;
+        }
+    }
+
+    public int GetX() {
+        return this._hero.get_rowPosition();
+    }
+
+    public int GetY() {
+        return this._hero.get_colPosition();
     }
 }

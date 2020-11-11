@@ -36,7 +36,7 @@ public class GameStateController {
             {
                 Thread.currentThread().interrupt();
             }
-            GeneralHelpers.ClearScreen();
+            System.exit(0);
         }
     }
 
@@ -71,11 +71,27 @@ public class GameStateController {
         _gameStateView.PrintStartOptions();
     }
 
+    public void ShowOptions(){
+        _gameStateView.PrintGameOptions();
+    }
+
     public void RequestName(){
         _gameStateView.PrintNameRequest();
     }
 
     public void RequestClass(){
         _gameStateView.PrintHeroClasses();
+    }
+
+    public ArrayList<GameState> GetList() {
+        return _savedGames;
+    }
+
+    public Map LoadSavedMap() throws ClassNotFoundException {
+        return Database.GetMap(this._gameState.get_mapId());
+    }
+
+    public Hero LoadSavedHero() throws SQLException, ClassNotFoundException {
+        return Database.GetHero(this._gameState.get_heroId());
     }
 }

@@ -6,7 +6,7 @@ import models.character.heros.Hero;
 
 public class HeroView {
     public void PrintPosition(Hero hero){
-        System.out.println("You are at position: [" + TextColors.ANSI_CYAN + hero.get_rowPosition() + TextColors.ANSI_RESET + "," + TextColors.ANSI_CYAN + hero.get_colPosition() + TextColors.ANSI_RESET + "]\n");
+        System.out.println("You are at position: [" + TextColors.ANSI_CYAN + hero.get_rowPosition() + TextColors.ANSI_RESET + "," + TextColors.ANSI_CYAN + hero.get_colPosition() + TextColors.ANSI_RESET + "]");
     }
 
     public void PrintHeroStats(Hero hero){
