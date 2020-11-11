@@ -11,22 +11,20 @@ import java.util.ArrayList;
 public class GameStateView {
 
     public void PrintStartOptions(){
-        System.out.println("\nWELCOME TO MY LITTLE RPG!\nEnter an Option below:\n");
+        System.out.println(TextColors.ANSI_PURPLE + "\nWELCOME TO MY LITTLE RPG!\n" + TextColors.ANSI_RESET + "Enter an Option below:\n");
         System.out.println(TextColors.ANSI_BLUE + "[N]" + TextColors.ANSI_RESET + " - Start [N]ew Game");
         System.out.println(TextColors.ANSI_BLUE + "[L]" + TextColors.ANSI_RESET + " - [L]oad Saved Game");
         System.out.println(TextColors.ANSI_RED + "[Q]" + TextColors.ANSI_RESET + " - [Q]uit\n");
     }
 
     public void PrintNameRequest(){
-        System.out.println("\nYour adventure begins here...\nEnter a Name for your hero:\n");
+        System.out.println(TextColors.ANSI_PURPLE + "\nYour adventure begins here...\n" + TextColors.ANSI_RESET + "Enter a name for your hero:\n");
     }
 
     public void PrintStartInstructions() {
         System.out.println("\nGet to one of the edges of the map to win the round.\nDefeating enemies will cause your XP to increase.\nLevelling up will increase the size of your map.");
         System.out.println(TextColors.ANSI_RED + "BE WARNED: If you encounter foe, you may try to run, but you will not always succeed.\nDying will force you to start again.");
     }
-
-
 
     public void PrintSavedGames(ArrayList<GameState> savedGames){
         System.out.println("\nSelect a Saved Game:\n");

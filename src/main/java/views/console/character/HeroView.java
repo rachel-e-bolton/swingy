@@ -1,8 +1,8 @@
 package views.console.character;
 
+import helpers.GeneralHelpers;
 import helpers.TextColors;
 import models.character.heros.Hero;
-import models.character.heros.HeroClass;
 
 public class HeroView {
     public void PrintPosition(Hero hero){
@@ -10,13 +10,14 @@ public class HeroView {
     }
 
     public void PrintHeroStats(Hero hero){
-        System.out.println("Hello, " + TextColors.ANSI_PURPLE + hero.get_name() + TextColors.ANSI_RESET + "!");
+        GeneralHelpers.ClearScreen();
+        System.out.println("\nHello, " + TextColors.ANSI_PURPLE + hero.get_name() + TextColors.ANSI_RESET + "!");
         System.out.println("Your stats are as follows: \n");
+        System.out.println("Class: " + hero.get_class());
         System.out.println("Level: " + hero.get_level());
         System.out.println("XP: " + hero.get_xp());
         System.out.println("Attack: " + hero.get_attack());
         System.out.println("Defense: " + hero.get_defense());
-        System.out.println("HP: " + "\n" + hero.get_hp());
-        System.out.println(TextColors.ANSI_GREEN + "[B]" + TextColors.ANSI_RESET + " - [B]ack");
+        System.out.println("HP: " + hero.get_hp() + "\n");
     }
 }

@@ -39,4 +39,8 @@ public class MapController {
     public void ShowMap() {
         _mapView.PrintMapDetails(_map);
     }
+
+    public Map GetMap() {
+        return this._map;
+    }
 }

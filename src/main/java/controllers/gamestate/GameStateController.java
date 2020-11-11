@@ -68,7 +68,6 @@ public class GameStateController {
     }
 
     public void StartGame(){
-        GeneralHelpers.ClearScreen();
         _gameStateView.PrintStartOptions();
     }
 
