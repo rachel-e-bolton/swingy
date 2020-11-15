@@ -27,9 +27,7 @@ public class Swingy {
             if (args[0].equals("console")) {
                 Setup.InitialiseDB();
                 ControllerGroup controllerGroup = Setup.StartGame(gameStateController, in, errors);
-                while (controllerGroup.heroController.GetX() > 1 || controllerGroup.heroController.GetY() > 1 || controllerGroup.heroController.GetX() < controllerGroup.mapController.GetDimensions() || controllerGroup.heroController.GetY() < controllerGroup.mapController.GetDimensions()) {
-                    Actions.SelectMove(controllerGroup, in, errors);
-                }
+                Actions.SelectMove(controllerGroup, in, errors);
             } else {
                 System.out.println(TextColors.ANSI_BLUE + "GUI mode is still under construction. Check back soon." + TextColors.ANSI_RESET);
             }

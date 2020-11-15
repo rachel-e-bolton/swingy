@@ -1,7 +1,6 @@
 package controllers.gamestate;
 
 import controllers.database.Database;
-import controllers.map.MapController;
 import helpers.GeneralHelpers;
 import models.character.heros.Hero;
 import models.gamestate.GameState;

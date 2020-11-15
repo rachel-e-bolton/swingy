@@ -1,10 +1,8 @@
 package views.console.gamestate;
 
 import helpers.TextColors;
-import models.character.heros.Hero;
 import models.character.heros.HeroClass;
 import models.gamestate.GameState;
-import models.map.Map;
 
 import java.util.ArrayList;
 

@@ -9,21 +9,21 @@ public class Villain extends AbstractCharacter {
 
     private VillainClass _class;
 
-    public Villain(String name, VillainClass villainClass, Hero opponent) {
+    public Villain(String name, VillainClass villainClass, Hero hero) {
         super(name, "VILLAIN", -1);
         this._class = villainClass;
 
         Random random = new Random();
 
-        int xp = random.ints((opponent.get_xp() - 450), (opponent.get_xp() + 450)).findFirst().getAsInt();
-        int attack = random.ints((opponent.get_attack() - 5), (opponent.get_attack() + 5)).findFirst().getAsInt();
-        int defense = random.ints((opponent.get_defense() - 5), (opponent.get_defense() + 5)).findFirst().getAsInt();
-        int hp = random.ints((opponent.get_hp() - 5), (opponent.get_hp() + 5)).findFirst().getAsInt();
+        int xp = Math.abs(random.ints((hero.get_xp() - 50), (hero.get_xp() + 50)).findFirst().getAsInt());
+        int attack = random.ints((hero.get_attack() - 5), (hero.get_attack() + 5)).findFirst().getAsInt();
+        int defense = random.ints((hero.get_defense() - 5), (hero.get_defense() + 5)).findFirst().getAsInt();
+        int hp = random.ints((hero.get_hp() - 5), (hero.get_hp() + 5)).findFirst().getAsInt();
 
         super.set_xp(xp);
         super.checkLevelUp();
-        super.set_colPosition(opponent.get_colPosition());
-        super.set_rowPosition(opponent.get_rowPosition());
+        super.set_colPosition(hero.get_colPosition());
+        super.set_rowPosition(hero.get_rowPosition());
 
         switch (villainClass) {
             case NaughtyBoy:
@@ -39,5 +39,9 @@ public class Villain extends AbstractCharacter {
                 super.set_defense(defense);
                 super.set_hp(hp);
         }
+    }
+
+    public VillainClass get_class() {
+        return _class;
     }
 }

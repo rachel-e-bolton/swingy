@@ -24,6 +24,11 @@ public class MapController {
         }
     }
 
+    public void UpdateMapDimensions(int dimension) throws ClassNotFoundException {
+        this._map.set_dimension(dimension);
+        Database.UpdateMap(this._map);
+    }
+
     public void SaveMap() throws ClassNotFoundException {
         Database.CreateMap(_map);
     }

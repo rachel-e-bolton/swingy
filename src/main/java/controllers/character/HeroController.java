@@ -3,7 +3,6 @@ package controllers.character;
 import controllers.database.Database;
 import helpers.Directions;
 import models.character.heros.Hero;
-import org.omg.DynamicAny.DynArray;
 import views.console.character.HeroView;
 
 import java.sql.SQLException;
@@ -19,6 +18,10 @@ public class HeroController {
 
     public void SaveHero() throws SQLException, ClassNotFoundException {
         Database.CreateHero(_hero);
+    }
+
+    public void UpdateHero() throws ClassNotFoundException {
+        Database.UpdateHero(_hero);
     }
 
     public int GetLevel() {
@@ -60,5 +63,30 @@ public class HeroController {
 
     public int GetY() {
         return this._hero.get_colPosition();
+    }
+
+    public void SetX(int rowPos) {
+        this._hero.set_rowPosition(rowPos);
+    }
+
+    public void SetY(int colPos) {
+        this._hero.set_colPosition(colPos);
+    }
+
+    public void SetXP(int XP) {
+        this._hero.set_xp((this._hero.get_xp()+XP));
+    }
+
+    public void ShowMapWin() {
+        this._heroView.PrintWinMap(this._hero);
+    }
+
+    public void LevelCheck() {
+        this._hero.checkLevelUp();
+    }
+
+    public void ResetPosition(int mapDimensions) {
+        this._hero.set_rowPosition((mapDimensions/2 + 1));
+        this._hero.set_colPosition((mapDimensions/2 + 1));
     }
 }
