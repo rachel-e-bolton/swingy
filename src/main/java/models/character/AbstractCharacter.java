@@ -106,4 +106,8 @@ public abstract class AbstractCharacter implements Serializable {
     public String get_name() {
         return _name;
     }
+
+    public void set_level(int _level) {
+        this._level = _level;
+    }
 }

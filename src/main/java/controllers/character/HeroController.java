@@ -89,4 +89,20 @@ public class HeroController {
         this._hero.set_rowPosition((mapDimensions/2 + 1));
         this._hero.set_colPosition((mapDimensions/2 + 1));
     }
+
+    public String GetHeroName() {
+        return _hero.get_name();
+    }
+
+    public void SetHP(int hp) {
+        this._hero.set_hp(this._hero.get_hp()+hp);
+    }
+
+    public void SetAttack(int attack) {
+        this._hero.set_attack(this._hero.get_attack()+attack);
+    }
+
+    public void SetDefense(int defense) {
+        this._hero.set_defense(this._hero.get_defense()+defense);
+    }
 }

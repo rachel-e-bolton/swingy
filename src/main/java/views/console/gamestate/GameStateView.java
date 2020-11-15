@@ -1,10 +1,16 @@
 package views.console.gamestate;
 
 import helpers.TextColors;
+import models.artefact.Artefact;
+import models.character.heros.Hero;
 import models.character.heros.HeroClass;
+import models.character.villains.Villain;
+import models.character.villains.VillainClass;
 import models.gamestate.GameState;
+import swingy.Swingy;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameStateView {
 
@@ -50,5 +56,47 @@ public class GameStateView {
             System.out.println("[" + heroClass.ordinal() + "] " + heroClass);
         }
         System.out.println();
+    }
+
+    public void PrintFightStart(String message) {
+        System.out.println(TextColors.ANSI_RED + message + TextColors.ANSI_RESET);
+    }
+
+    public void PrintAttack(String attackerName, String defenderName, int damage) {
+        try
+        {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
+        System.out.println("\n" + TextColors.ANSI_PURPLE + attackerName + TextColors.ANSI_RESET + " has attacked!");
+        System.out.println(TextColors.ANSI_PURPLE + defenderName + TextColors.ANSI_RESET + " has taken " + damage + " damage.");
+    }
+
+    public void PrintLose() {
+        System.out.println("\nYou've lost this one, I'm afraid... Goodbye!\n");
+    }
+
+    public void PrintArtefact(Artefact artefact, int artefactValue) {
+        String pointsType;
+
+        switch (artefact){
+            case Weapon:
+                pointsType = " attack points.";
+                break;
+            case Helm:
+                pointsType = " HP.";
+                break;
+            case Armor:
+                pointsType = " defense points.";
+                break;
+            default:
+                pointsType = " points";
+        }
+
+        System.out.println("\nYou've been rewarded with an artefact: " + artefact + " worth " + artefactValue + pointsType);
+        System.out.println(TextColors.ANSI_GREEN + "[K]" + TextColors.ANSI_RESET + " - [K]eep" + " | " + TextColors.ANSI_RED + "[L]" + TextColors.ANSI_RESET + " - [L]eave\n");
     }
 }

@@ -195,7 +195,7 @@ public class Setup {
             } else {
                 System.exit(0);
             }
-        } catch (InputMismatchException | ClassNotFoundException | SQLException inputMismatchException) {
+        } catch (InputMismatchException | ClassNotFoundException | SQLException | NumberFormatException exception) {
             GeneralHelpers.ClearScreen();
             errors.add(TextColors.ANSI_RED + "\nPlease select a valid option!\n" + TextColors.ANSI_RESET);
             return StartGame(gameStateController, in, errors);

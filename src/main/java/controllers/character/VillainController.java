@@ -20,4 +20,12 @@ public class VillainController {
     public void NewVillain(Villain villain) {
         this._villain = villain;
     }
+
+    public Villain GetVillain() {
+        return this._villain;
+    }
+
+    public int GetXP() {
+        return this._villain.get_xp();
+    }
 }

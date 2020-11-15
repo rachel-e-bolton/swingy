@@ -1,18 +1,19 @@
 package gameplay;
 
+import com.sun.tools.javah.Gen;
+import com.sun.xml.internal.rngom.digested.DValuePattern;
 import controllers.ControllerGroup;
 import controllers.character.VillainController;
 import helpers.Directions;
 import helpers.GeneralHelpers;
 import helpers.TextColors;
+import models.artefact.Artefact;
 import models.character.villains.Villain;
 import models.character.villains.VillainClass;
 import models.character.villains.VillainNames;
 import views.console.character.VillainView;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -55,9 +56,11 @@ public final class Actions {
                     } else if (selectMove.matches("a|A")) {
                         controllerGroup.heroController.Move(Directions.Left);
                     }
-
                 } else if (selectMove.matches("x|X")) {
-                    //Write save
+                    controllerGroup.heroController.UpdateHero();
+                    controllerGroup.mapController.UpdateMap();
+                    controllerGroup.gameStateController.UpdateGameState(controllerGroup.heroController.GetHero());
+                    errors.add(TextColors.ANSI_GREEN + "Game saved successfully..." + TextColors.ANSI_RESET);
                 } else if (selectMove.matches("p|P")) {
                     controllerGroup.heroController.ShowHero();
                     System.out.println(TextColors.ANSI_BLUE + "[B]" + TextColors.ANSI_RESET + "ack | " + TextColors.ANSI_RED + "[Q]" + TextColors.ANSI_RESET + "uit\n");
@@ -102,9 +105,11 @@ public final class Actions {
         controllerGroup.mapController.UpdateMapDimensions(((level-1)*5+10-(level%2)));
         controllerGroup.heroController.ResetPosition(controllerGroup.mapController.GetDimensions());
         controllerGroup.heroController.UpdateHero();
+
+        controllerGroup.gameStateController.UpdateGameState(controllerGroup.heroController.GetHero());
         try
         {
-            Thread.sleep(2500);
+            Thread.sleep(1500);
         }
         catch(InterruptedException ex)
         {
@@ -122,15 +127,46 @@ public final class Actions {
 
         try {
             if (fightOrFlight.matches("f|F")) {
-                System.out.println("You've chosen to Fight!"); // Must go in gamestate view
+                boolean win = controllerGroup.gameStateController.Fight(controllerGroup.heroController.GetHero(), controllerGroup.villainController.GetVillain(), "You've chosen to fight!", true);
+                if (!win) {
+                    controllerGroup.heroController.SetXP(controllerGroup.villainController.GetXP());
+                    controllerGroup.heroController.LevelCheck();
+                    controllerGroup.gameStateController.UpdateGameState(controllerGroup.heroController.GetHero());
+                    controllerGroup.gameStateController.Lose();
+                } else  {
+                    WinArtefact(controllerGroup, in, errors);
+                    controllerGroup.heroController.SetXP(controllerGroup.villainController.GetXP());
+                    controllerGroup.heroController.LevelCheck();
+                    controllerGroup.gameStateController.UpdateGameState(controllerGroup.heroController.GetHero());
+                    errors.add(TextColors.ANSI_GREEN + "\nWoo! You won that one... Keep moving." + TextColors.ANSI_RESET);
+                }
             } else if (fightOrFlight.matches("r|R")) {
-                System.out.println("Successfully Ran."); // Must go in gamestate view
+                int runChance = ThreadLocalRandom.current().nextInt(1,3);
+
+                if (!(runChance == 1)) {
+                    GeneralHelpers.ClearScreen();
+                    errors.add(TextColors.ANSI_GREEN + "\nPhew! You got away successfully!" + TextColors.ANSI_RESET);
+                } else {
+                    boolean win = controllerGroup.gameStateController.Fight(controllerGroup.heroController.GetHero(), controllerGroup.villainController.GetVillain(), "No running this time...", false);
+                    if (!win) {
+                        controllerGroup.heroController.SetXP(controllerGroup.villainController.GetXP());
+                        controllerGroup.heroController.LevelCheck();
+                        controllerGroup.gameStateController.UpdateGameState(controllerGroup.heroController.GetHero());
+                        controllerGroup.gameStateController.Lose();
+                    } else  {
+                        WinArtefact(controllerGroup, in, errors);
+                        controllerGroup.heroController.SetXP(controllerGroup.villainController.GetXP());
+                        controllerGroup.heroController.LevelCheck();
+                        controllerGroup.gameStateController.UpdateGameState(controllerGroup.heroController.GetHero());
+                        errors.add(TextColors.ANSI_GREEN + "\nWoo! You won that one... Keep moving." + TextColors.ANSI_RESET);
+                    }
+                }
             } else {
                 GeneralHelpers.ClearScreen();
                 errors.add(TextColors.ANSI_RED + "\nPlease select a valid option!\n" + TextColors.ANSI_RESET);
                 FightOrFlight(controllerGroup, in, errors);
             }
-        } catch (NumberFormatException exception) {
+        } catch (NumberFormatException | ClassNotFoundException exception) {
             GeneralHelpers.ClearScreen();
             errors.add(TextColors.ANSI_RED + "\nPlease select a valid option!\n" + TextColors.ANSI_RESET);
             FightOrFlight(controllerGroup, in, errors);
@@ -138,6 +174,37 @@ public final class Actions {
     }
 
     public static void WinArtefact(ControllerGroup controllerGroup, Scanner in, ArrayList<String> errors) {
+        GeneralHelpers.ClearScreen();
+        errors.forEach(System.out::println);
+        errors.clear();
+        int artefactChance = ThreadLocalRandom.current().nextInt(1,6);
 
+
+        if (!(artefactChance == 1)) {
+            try {
+                Artefact artefact = Artefact.getRandomArtefact();
+                int artefactValue = controllerGroup.gameStateController.GetArtefactValue(artefact, controllerGroup.villainController.GetVillain());
+                controllerGroup.gameStateController.ShowArtefactValue(artefact, artefactValue);
+                String artefactChoice = in.nextLine();
+
+                if (artefactChoice.matches("k|K")) {
+                    switch (artefact) {
+                        case Armor:
+                            controllerGroup.heroController.SetDefense(artefactValue);
+                            break;
+                        case Helm:
+                            controllerGroup.heroController.SetHP(artefactValue);
+                            break;
+                        case Weapon:
+                            controllerGroup.heroController.SetAttack(artefactValue);
+                            break;
+                    }
+                } else {
+                    errors.add(TextColors.ANSI_RED + "Shoulda said KEEP... Better luck next time." + TextColors.ANSI_RESET);
+                }
+            } catch (Exception e) {
+                errors.add(TextColors.ANSI_RED + "Shoulda said KEEP... Better luck next time." + TextColors.ANSI_RESET);
+            }
+        }
     }
 }
