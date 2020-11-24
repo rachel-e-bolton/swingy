@@ -2,3 +2,4 @@ out/
 target/
 
 swingy.db
+.DS_Store

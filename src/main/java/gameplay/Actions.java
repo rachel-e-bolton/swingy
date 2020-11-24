@@ -1,7 +1,5 @@
 package gameplay;
 
-import com.sun.tools.javah.Gen;
-import com.sun.xml.internal.rngom.digested.DValuePattern;
 import controllers.ControllerGroup;
 import controllers.character.VillainController;
 import helpers.Directions;
